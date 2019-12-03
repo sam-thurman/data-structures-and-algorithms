@@ -196,24 +196,25 @@ describe('Testing challenge 7', () => {
 });
 -----------------------------------------------------------*/
 const fizzbuzz = (arr) => {
-  const outPutArr = [];
+  const newArr = [];
   arr.forEach(value => {
-
-    if (Number.isNaN(value)) {
-      console.log('whoops')
-    } else if (Number.isInteger(value % 3)) {
-      outPutArr.push('Fizz')
-    } else if (Number.isInteger(value % 5)) {
-      outPutArr.push('Buzz')
-    } else if (Number.isInteger(value % 3) && Number.isInteger(value % 5)) {
-      outPutArr.push('Fizz Buzz')
+    if (value % 3 === 0 && value % 5 === 0) {
+      newArr.push('Fizz Buzz')
+      console.log('Fizz Buzz')
+    } else if (value % 3 === 0) {
+      newArr.push('Fizz')
+      console.log('Fizz')
+    } else if (value % 5 === 0) {
+      newArr.push('Buzz')
+      console.log('Buzz')
     } else {
-      outPutArr.push(value)
+      newArr.push(value)
+      console.log(value)
     }
   }
 
   );
-  return outPutArr
+  return newArr
 };
 
 /* ------------------------------------------------------------------------------------------------
