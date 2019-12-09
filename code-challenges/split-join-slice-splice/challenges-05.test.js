@@ -32,8 +32,10 @@ Write a function name wordsToCharList that, given a string as input, returns a n
 For example, wordsToCharList('gregor') returns ['g','r','e','g','o','r'].
 ------------------------------------------------------------------------------------------------ */
 
-const wordsToCharList = (arr) => {
-  // Solution code here...
+const wordsToCharList = (str) => {
+  let string = str
+
+  return string.split('');
 };
 
 
@@ -80,7 +82,14 @@ const gruffaloCrumble = {
 
 const listFoods = (recipe) => {
   let result = [];
-  // Solution code here...
+  recipe.ingredients.forEach((value) => {
+    let sliceIndex = value.indexOf(' ', 3);
+    result.push(value.slice(sliceIndex + 1));
+  });
+  // result.forEach((value) => {
+  //   let sliceIndex = value.indexOf(' ');
+  //   finalResult.push(value.slice(sliceIndex));
+  // })
   return result;
 };
 
@@ -93,8 +102,18 @@ You may also use other string or array methods.
 ------------------------------------------------------------------------------------------------ */
 
 const splitFoods = (recipe) => {
-  let result = [];
-  // Solution code here...
+  const result = [];
+  const scrapWords = [];
+  recipe.ingredients.forEach(value => { scrapWords.push(value.split(" ", 2)); })
+  recipe.ingredients.forEach(value => {
+    const index = recipe.ingredients.indexOf(value);
+    const sliceNum = ((scrapWords[index][0].length) + (scrapWords[index][1].length));
+    // console.log(scrapWords)
+    result.push(recipe.ingredients[index].slice((sliceNum + 2), (recipe.ingredients[index].length)));
+    // console.log(sliceNum)
+  });
+
+  // console.log(scrapWords)
   return result;
 };
 
@@ -109,8 +128,15 @@ Return a new array containing just the verbs. For example, ['Mix until evenly di
 ------------------------------------------------------------------------------------------------ */
 
 const stepActions = (recipe) => {
-  let result = [];
-  // Solution code here...
+  const result = [];
+  const sudoResults = [];
+  recipe.steps.forEach(step => {
+    sudoResults.push(step.split(' '))
+    let index = recipe.steps.indexOf(step);
+    let sliceNum = (sudoResults[index][0].length)
+    //console.log(sudoResults[index][0])
+    result.push(step.slice(0, sliceNum))
+  })
   return result;
 };
 
@@ -201,7 +227,7 @@ Run your tests from the console: jest challenges-05.test.js
 
 ------------------------------------------------------------------------------------------------ */
 
-describe('Testing challenge 1', () => {
+xdescribe('Testing challenge 1', () => {
   test('It should return a list of shortening words', () => {
     expect(howMuchPencil('Welcome')).toStrictEqual(['Welcome', 'elcome', 'lcome', 'come', 'ome', 'me', 'e', '']);
     expect(howMuchPencil('Welcome').length).toStrictEqual(8);
@@ -239,7 +265,7 @@ xdescribe('Testing challenge 5', () => {
   });
 });
 
-xdescribe('Testing challenge 6', () => {
+describe('Testing challenge 6', () => {
   test('It should remove the even numbers from the array', () => {
     let list = [1, 2, 3, 4, 5, 6];
     removeEvenValues(list);
