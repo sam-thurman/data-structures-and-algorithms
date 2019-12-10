@@ -154,13 +154,19 @@ For example:
 ------------------------------------------------------------------------------------------------ */
 
 const removeEvenValues = (arr) => {
-
   for (let i = 0; i < arr.length; i + 2) {
-    if (arr[i] % 2 === 0) {
-      arr.splice(i, 1)
+    let currentInt = arr[i]
+    if (currentInt % 2 === 0) {
+      arr.splice(i, 0)
     }
+    return arr;
   }
-  return arr;
+  // for (let i = 0; i < arr.length; i + 2) {
+  //   if (arr[i] % 2 === 0) {
+  //     arr.splice(i, 1)
+  //   }
+  // }
+  // return arr;
 };
 
 /* ------------------------------------------------------------------------------------------------
