@@ -154,7 +154,19 @@ For example:
 ------------------------------------------------------------------------------------------------ */
 
 const removeEvenValues = (arr) => {
-  // Solution code here...
+  for (let i = 0; i < arr.length; i + 2) {
+    let currentInt = arr[i]
+    if (currentInt % 2 === 0) {
+      arr.splice(i, 0)
+    }
+    return arr;
+  }
+  // for (let i = 0; i < arr.length; i + 2) {
+  //   if (arr[i] % 2 === 0) {
+  //     arr.splice(i, 1)
+  //   }
+  // }
+  // return arr;
 };
 
 /* ------------------------------------------------------------------------------------------------
