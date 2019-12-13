@@ -9,7 +9,12 @@ Note: You may not use the array's built-in length property.
 ------------------------------------------------------------------------------------------------ */
 
 const countNumberOfElements = (arr) => {
-  // Solution code here...
+  let counter = 1;
+
+  arr.reduce((accumulator, element, index) => {
+    counter++
+  })
+  return counter;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -70,7 +75,11 @@ let starWarsData = [{
 }];
 
 const returnNames = (arr) => {
-  // Solution code here...
+  let namesArr = [];
+  arr.reduce((accumulator, character, index) => {
+    namesArr.push(character.name)
+  }, 0)
+  return namesArr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -82,7 +91,14 @@ Note: You must use reduce for this challenge. You may not use the built-in .reve
 ------------------------------------------------------------------------------------------------ */
 
 const reversedString = (str) => {
-  // Solution code here...
+  let lettersArr = [];
+  for (let i = 0; i < str.length; i++) {
+    lettersArr.push(str.charAt(i));
+  }
+  return lettersArr.reduce((accumulator, letter, index) => {
+    accumulator = letter + accumulator;
+    return accumulator;
+  })
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -135,7 +151,13 @@ const characters = [
 ];
 
 const countNumberOfChildren = (arr) => {
-  // Solution code here...
+  let totalChildren = 0;
+  arr.reduce((accumulator, character, index) => {
+    if (character.children) {
+      totalChildren = totalChildren + (character.children.length)
+    }
+  }, 0)
+  return totalChildren;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -147,7 +169,13 @@ Hint: The accumulator should begin as { count: 0, sum: 0 }
 ------------------------------------------------------------------------------------------------ */
 
 const calculateAverage = (arr) => {
-  // Solution code here...
+  let sum = 0;
+  let count = 0;
+  arr.reduce((accumulator, number, index) => {
+    count = count + 1
+    sum = sum + number;
+  }, 0)
+  return (sum / count);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -168,7 +196,13 @@ const isPrime = (value) => {
 };
 
 const countPrimeNumbers = (arr) => {
-  // Solution code here...
+  let numberPrime = 0;
+  arr.reduce((accumulator, number, index) => {
+    if (isPrime(number)) {
+      numberPrime++;
+    }
+  }, 0)
+  return numberPrime
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -238,7 +272,7 @@ DO NOT CHANGE any of the below code.
 Run your tests from the console: jest challenges-09.test.js
 ------------------------------------------------------------------------------------------------ */
 
-describe('Testing challenge 1', () => {
+xdescribe('Testing challenge 1', () => {
   test('It should return the length of the array', () => {
     expect(countNumberOfElements([1, 2, 3, 4, 5])).toStrictEqual(5);
   });
@@ -269,7 +303,7 @@ xdescribe('Testing challenge 5', () => {
   });
 });
 
-xdescribe('Testing challenge 6', () => {
+describe('Testing challenge 6', () => {
   test('It should return a count of the prime numbers in the array', () => {
     expect(countPrimeNumbers([1, 2, 13, 64, 45, 56, 17, 8])).toStrictEqual(3);
   });
