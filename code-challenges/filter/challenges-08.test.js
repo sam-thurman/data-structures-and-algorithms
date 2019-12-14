@@ -9,7 +9,7 @@ For example, oddValues([1,2,3]) returns [1,3].
 ------------------------------------------------------------------------------------------------ */
 
 const oddValues = (arr) => {
-  // Solution code here...
+  return arr.filter((int) => int % 2 !== 0)
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -24,7 +24,8 @@ For example, filterStringsWithVowels('gregor','hound','xyz') returns ['gregor', 
 
 
 const filterStringsWithVowels = (arr) => {
-  // Solution code here...
+  let regex = /a|e|i|o|u/
+  return arr.filter((word) => regex.test(word))
 };
 
 
@@ -37,7 +38,7 @@ For example, notInFirstArray([1,2,3], [1,2,3,4]) returns [4].
 ------------------------------------------------------------------------------------------------ */
 
 const notInFirstArray = (forbiddenValues, arr) => {
-  // Solution code here...
+  return arr.filter((word) => !forbiddenValues.includes(word))
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -80,7 +81,7 @@ const snorlaxData = {
 };
 
 const getBaseStatGreaterThan = (arr, minBaseStat) => {
-  // Solution code here...
+  return arr.filter((value) => value.baseStat > minBaseStat)
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -92,7 +93,12 @@ For example, getStatName(snorlaxData.stats, 50) will return ['special-defense', 
 ------------------------------------------------------------------------------------------------ */
 
 const getStatName = (arr, minBaseStat) => {
-  // Solution code here...
+  let finArr = [];
+  let firstArr = arr.filter((value) => value.baseStat > minBaseStat)
+  for (let i = 0; i < firstArr.length; i++) {
+    finArr.push(firstArr[i].stat.name)
+  }
+  return finArr
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -145,7 +151,7 @@ const characters = [
 ];
 
 const getCharactersWithoutChildren = (arr) => {
-  // Solution code here...
+  return arr.filter((character) => !character.children)
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -171,7 +177,7 @@ Run your tests from the console: jest challenges-08.test.js
 
 ------------------------------------------------------------------------------------------------ */
 
-describe('Testing challenge 1', () => {
+xdescribe('Testing challenge 1', () => {
   test('It should return an array containing only odd integers', () => {
     expect(oddValues([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])).toStrictEqual([1, 3, 5, 7, 9]);
     expect(oddValues([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).length).toStrictEqual(5);
@@ -249,7 +255,7 @@ xdescribe('Testing challenge 5', () => {
   });
 });
 
-xdescribe('Testing challenge 6', () => {
+describe('Testing challenge 6', () => {
   test('It should return an array containing characters who do not have children', () => {
     expect(getCharactersWithoutChildren(characters)).toStrictEqual([{ name: 'Sansa', spouse: 'Tyrion', house: 'Stark' }, { name: 'Jon', spouse: null, house: 'Snow' }]);
     expect(getCharactersWithoutChildren(characters).length).toStrictEqual(2);
