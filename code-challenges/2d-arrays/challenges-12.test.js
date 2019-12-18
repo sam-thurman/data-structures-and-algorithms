@@ -86,7 +86,15 @@ const errands = [
 ];
 
 const howManyTreats = (arr) => {
-  // Solution code here...
+  let result = 0;
+  arr.forEach(object => {
+    for (let i = 0; i < object.items.length; i++) {
+      if (object.items[i].name === 'Treats') {
+        result = result + object.items[i].quantity
+      }
+    }
+  })
+  return result;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -108,7 +116,11 @@ The top row of the board is considered row zero and row numbers increase as they
 ------------------------------------------------------------------------------------------------ */
 
 const battleship = (board, row, col) => {
-  //  Solution code here...
+  if (board[row - 1][col - 1] === ' ') {
+    return 'miss'
+  } else if (board[row - 1][col - 1] === '#') {
+    return 'hit'
+  }
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -220,13 +232,13 @@ xdescribe('Testing challenge 2', () => {
 });
 
 
-describe('Testing challenge 3', () => {
+xdescribe('Testing challenge 3', () => {
   test('It should return the number 24', () => {
     expect(howManyTreats(errands)).toStrictEqual(24);
   });
 });
 
-xdescribe('Testing challenge 4', () => {
+describe('Testing challenge 4', () => {
   const battleshipData = [
     ['#', ' ', '#', ' '],
     ['#', ' ', '#', ' '],
