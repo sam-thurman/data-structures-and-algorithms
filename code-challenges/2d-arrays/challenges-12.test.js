@@ -43,30 +43,27 @@ Here is sample data for the 9:00 sales: { sales: '88 cookies', time: '9 a.m.' }.
 
 Write a function named salesData that uses forEach to iterate over the hourlySales array and create an object for each hour. Return an array of the formatted data.
 ------------------------------------------------------------------------------------------------ */
-function Result(sum, hour) {
-  this.sales = `${sum} cookies sold this hour`;
-  this.time = hour;
-}
+
 const salesData = (hours, data) => {
   let sumResults = [];
   let results = [];
   for (let i = 0; i < hours.length; i++) {
     let sum = 0;
-    for (let j = 0; j < data.length; j++) {
-      sum = sum + data[j][i];
-    }
+    sum = data[i];
     sumResults.push(sum)
-    console.log(sum)
   }
   for (let k = 0; k < sumResults.length; k++) {
-    results.push(new Result(sumResults[k], hours[k]))
+    results.push({
+      sales: `${sumResults[k]} cookies`,
+      time: `${hours[k]}`
+    })
   }
   return results;
 };
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 3
-
+ 
 Write a function named howManyTreats that will return the quantity of treats you need to pick up from the pet store today from this array.
 ------------------------------------------------------------------------------------------------ */
 
@@ -99,11 +96,11 @@ const howManyTreats = (arr) => {
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 4
-
+ 
 Write a function named battleship that accepts a 2D array and two numbers: a row coordinate and a column coordinate.
-
+ 
 Return "hit" or "miss" depending on if there's part of a boat at that position in the array. Assume the array has only one of two values at each index. '#' for part of a boat, or ' ' for open water.
-
+ 
 Here is a sample board:
 [
   ['#', ' ', '#', ' '],
@@ -111,7 +108,7 @@ Here is a sample board:
   ['#', ' ', ' ', ' '],
   [' ', ' ', '#', '#'],
 ]
-
+ 
 The top row of the board is considered row zero and row numbers increase as they go down.
 ------------------------------------------------------------------------------------------------ */
 
@@ -125,21 +122,30 @@ const battleship = (board, row, col) => {
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 5
-
+ 
 Write a function named calculateProduct that takes in a two-dimensional array of numbers, multiplies all of the numbers in each array, and returns the final product. This function should work for any number of inner arrays.
-
+ 
 For example, the following input returns a product of 720: [[1,2], [3,4], [5,6]]
 ------------------------------------------------------------------------------------------------ */
 
 const calculateProduct = (numbers) => {
-  // Solution code here...
+  let runningTot = 0;
+  let lastVal = 1;
+  numbers.forEach(array => {
+    array.forEach(value => {
+      runningTot = lastVal * value;
+      lastVal = runningTot;
+    })
+
+  })
+  return runningTot;
 };
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 6
-
+ 
 Write a function named averageDailyTemperature that accepts a two-dimensional array representing average daily temperatures grouped week-by-week.
-
+ 
 Calculate the average daily temperature during that entire period. Your output should be a single number. Write your function so it could accept an array with any number of weeks given to it.
 ------------------------------------------------------------------------------------------------ */
 
@@ -152,16 +158,29 @@ const weeklyTemperatures = [
 ];
 
 const averageDailyTemperature = (weather) => {
-  // Solution code here...
+  let tempAvgs = [];
+  let totalAvg = 0;
+  weather.forEach(week => {
+    let weekTot = 0;
+    for (let i = 0; i < 7; i++) {
+      weekTot = weekTot + week[i];
+    }
+    tempAvgs.push(weekTot / 7);
+  })
+  tempAvgs.forEach(sum => {
+    totalAvg = totalAvg + sum;
+  })
+
+  return totalAvg / weather.length
 };
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 7
-
+ 
 Write a function named lowestWeeklyAverage that accepts a two-dimensional array of daily temperatures grouped week-by-week.
-
+ 
 Calculate the average temperature for each week and return the value of the lowest weekly average temperature.
-
+ 
 For example, in the data set below, the lowest weekly average is 46, which is the average of the temperatures in week 2. All other weeks have average temperatures that are greater than 46.
 ------------------------------------------------------------------------------------------------ */
 
@@ -173,38 +192,69 @@ let lowestWeeklyTemperatureData = [
 ];
 
 const lowestWeeklyAverage = (weather) => {
-  // Solution code here...
+  let tempAvgs = [];
+  let totalAvg = 0;
+  weather.forEach(week => {
+    let weekTot = 0;
+    for (let i = 0; i < 7; i++) {
+      weekTot = weekTot + week[i];
+    }
+    tempAvgs.push(Math.round(weekTot / 7));
+  })
+  let lowestAvg = 1000;
+  tempAvgs.forEach(value => {
+    if (value < lowestAvg) {
+      lowestAvg = value
+    }
+  })
+
+  return lowestAvg;
 };
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 8
-
+ 
 Write a function called excel that accepts a string representing rows and columns in a table.
-
+ 
 Rows are seperated by newline "\n" characters. Columns are seperated by commas. For example, '1,1,1\n4,4,4\n9,9,9' represents a 3x3 table.
-
+ 
 The function should parse the string as rows and columns and compute the sum of the values for each row. Return an array with the sum of the values in each row.
-
+ 
 For example, excel('1,1,1\n4,4,4\n9,9,9') returns [3, 12, 27].
 ------------------------------------------------------------------------------------------------ */
 
 const excel = (str) => {
-  // Solution code here...
+  let firstArr = str.split(/\r?\n/);
+  let secondArr = [];
+  let sumArr = [];
+  for (let i = 0; i < firstArr.length; i++) {
+    secondArr.push(firstArr[i].split(/\r?\n/));
+  }
+  for (let i = 0; i < secondArr.length; i++) {
+    let sum = 0;
+    secondArr[i].forEach(array => {
+      array.split(/\r?,/).forEach(value => {
+        sum = sum + Number(value);
+      })
+    })
+    sumArr.push(sum)
+  }
+  return sumArr
 };
 
 /* ------------------------------------------------------------------------------------------------
 TESTS
-
+ 
 All the code below will verify that your functions are working to solve the challenges.
-
+ 
 DO NOT CHANGE any of the below code.
-
+ 
 Run your tests from the console: jest challenge-12.test.js
-
+ 
 ------------------------------------------------------------------------------------------------ */
 
 
-xdescribe('Testing challenge 1', () => {
+describe('Testing challenge 1', () => {
   test('It should add the hourly totals array', () => {
     expect(grandTotal(cookieStores)).toStrictEqual([88, 153, 252, 286, 139, 161, 145, 232, 276, 207, 161, 169]);
   });
@@ -232,13 +282,13 @@ describe('Testing challenge 2', () => {
 });
 
 
-xdescribe('Testing challenge 3', () => {
+describe('Testing challenge 3', () => {
   test('It should return the number 24', () => {
     expect(howManyTreats(errands)).toStrictEqual(24);
   });
 });
 
-xdescribe('Testing challenge 4', () => {
+describe('Testing challenge 4', () => {
   const battleshipData = [
     ['#', ' ', '#', ' '],
     ['#', ' ', '#', ' '],
@@ -257,7 +307,7 @@ xdescribe('Testing challenge 4', () => {
   });
 });
 
-xdescribe('Testing challenge 5', () => {
+describe('Testing challenge 5', () => {
   test('It should multiply all the numbers together', () => {
     expect(calculateProduct([[1, 2], [3, 4], [5, 6]])).toStrictEqual(720);
   });
@@ -270,20 +320,20 @@ xdescribe('Testing challenge 5', () => {
   });
 });
 
-xdescribe('Testing challenge 6', () => {
+describe('Testing challenge 6', () => {
   test('It should calculate and return the average temperature of the data set', () => {
     expect(averageDailyTemperature(weeklyTemperatures)).toStrictEqual(60.25);
   });
 });
 
-xdescribe('Testing challenge 7', () => {
+describe('Testing challenge 7', () => {
   test('It should return the lowest weekly average temperature within the data set', () => {
     expect(lowestWeeklyAverage(weeklyTemperatures)).toStrictEqual(57);
     expect(lowestWeeklyAverage(lowestWeeklyTemperatureData)).toStrictEqual(46);
   });
 });
 
-xdescribe('Testing challenge 8', () => {
+describe('Testing challenge 8', () => {
   test('It should return the total count for each row', () => {
     let result = excel('1,1,1\n4,4,4\n9,9,9');
     expect(result.length).toStrictEqual(3);
